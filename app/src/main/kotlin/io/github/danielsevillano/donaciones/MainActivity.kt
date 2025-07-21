@@ -5,17 +5,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -76,23 +72,18 @@ class MainActivity : ComponentActivity() {
                         BarraNavegacion(navController = navController)
                     }
                 ) { paddingValues ->
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                    ) {
-                        Navegacion(
-                            navController = navController,
-                            viewModel = viewModel,
-                            colectaDao = colectaDao,
-                            donacionDao = donacionDao,
-                            provincia = provinciaSeleccionada,
-                            modificarProvincia = { provincia ->
-                                provinciaSeleccionada = provincia
-                                viewModel.colectas = null
-                            }
-                        )
-                    }
+                    Navegacion(
+                        navController = navController,
+                        viewModel = viewModel,
+                        colectaDao = colectaDao,
+                        donacionDao = donacionDao,
+                        provincia = provinciaSeleccionada,
+                        modificarProvincia = { provincia ->
+                            provinciaSeleccionada = provincia
+                            viewModel.colectas = null
+                        },
+                        scaffoldPadding = paddingValues
+                    )
                 }
             }
         }

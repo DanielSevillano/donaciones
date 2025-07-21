@@ -23,7 +23,7 @@ fun Subencabezado(
     ) {
         Text(
             text = titulo,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleMedium
         )
 
         boton?.let {

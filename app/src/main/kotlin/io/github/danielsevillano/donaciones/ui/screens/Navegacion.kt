@@ -1,5 +1,6 @@
 package io.github.danielsevillano.donaciones.ui.screens
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
@@ -22,7 +23,8 @@ fun Navegacion(
     colectaDao: ColectaDao,
     donacionDao: DonacionDao,
     provincia: Provincia,
-    modificarProvincia: (Provincia) -> Unit
+    modificarProvincia: (Provincia) -> Unit,
+    scaffoldPadding: PaddingValues
 ) {
     val context = LocalContext.current
     val dataStore = context.dataStore
@@ -50,7 +52,8 @@ fun Navegacion(
                         provincia = provincia,
                         dao = colectaDao
                     )
-                }
+                },
+                scaffoldPadding = scaffoldPadding
             )
         }
 
@@ -64,7 +67,8 @@ fun Navegacion(
                         provincia = provincia,
                         dao = colectaDao
                     )
-                }
+                },
+                scaffoldPadding = scaffoldPadding
             )
         }
 
@@ -90,7 +94,8 @@ fun Navegacion(
                 eliminarDonacion = { donacion ->
                     donacionDao.eliminarDonacion(donacion = donacion)
                 },
-                modificarProvincia = modificarProvincia
+                modificarProvincia = modificarProvincia,
+                scaffoldPadding = scaffoldPadding
             )
         }
     }
