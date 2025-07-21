@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,7 +18,9 @@ import io.github.danielsevillano.donaciones.data.local.Colecta
 import io.github.danielsevillano.donaciones.ui.components.ElementoColecta
 import io.github.danielsevillano.donaciones.ui.components.Encabezado
 import io.github.danielsevillano.donaciones.ui.components.GrupoColectasDiarias
+import io.github.danielsevillano.donaciones.ui.components.MensajeError
 import io.github.danielsevillano.donaciones.ui.components.Subencabezado
+import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
@@ -25,7 +28,12 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 @Composable
-fun Inicio(colectas: List<Colecta>?) {
+fun Inicio(
+    colectas: List<Colecta>?,
+    cargando: Boolean,
+    error: Boolean,
+    recargar: suspend () -> Unit
+) {
     val colectasAgrupadas =
         colectas?.groupBy { it.municipio + it.lugar + it.fecha.dayOfYear }?.values?.toList()
             ?: emptyList()
@@ -36,6 +44,8 @@ fun Inicio(colectas: List<Colecta>?) {
             TimeZone.currentSystemDefault()
         ).dayOfWeek)
     }?.groupBy { it.fecha.dayOfYear }?.values?.toList() ?: emptyList()
+
+    val scope = rememberCoroutineScope()
 
     LazyColumn(
         contentPadding = PaddingValues(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 16.dp),
@@ -88,7 +98,9 @@ fun Inicio(colectas: List<Colecta>?) {
                     )
                 }
             }
-        } else {
+        }
+
+        if (cargando) {
             item(key = "carga") {
                 Box(
                     modifier = Modifier
@@ -98,6 +110,14 @@ fun Inicio(colectas: List<Colecta>?) {
                 ) {
                     CircularProgressIndicator()
                 }
+            }
+        } else if (error) {
+            item(key = "error") {
+                MensajeError(
+                    recargar = {
+                        scope.launch { recargar() }
+                    }
+                )
             }
         }
     }

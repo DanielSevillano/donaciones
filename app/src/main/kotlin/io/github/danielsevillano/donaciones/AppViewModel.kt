@@ -20,12 +20,17 @@ import kotlin.time.ExperimentalTime
 
 class AppViewModel() : ViewModel() {
     var colectas: List<Colecta>? by mutableStateOf(value = null)
+    var cargando by mutableStateOf(value = true)
+    var error by mutableStateOf(value = false)
 
     @OptIn(ExperimentalTime::class)
     suspend fun obtenerColectas(
         provincia: Provincia,
         dao: ColectaDao
     ) {
+        cargando = true
+        error = false
+
         colectas = try {
             dao.obtenerColectas(provincia = provincia).first()
         } catch (_: Exception) {
@@ -38,9 +43,13 @@ class AppViewModel() : ViewModel() {
             emptyList()
         }
 
+        cargando = false
+
         if (respuesta.isNotEmpty()) {
             colectas = respuesta
             dao.guardarColectas(colectas = respuesta)
+        } else if (colectas.isNullOrEmpty()) {
+            error = true
         }
 
         dao.eliminarColectasPasadas(fecha = Clock.System.todayIn(TimeZone.Companion.currentSystemDefault()))

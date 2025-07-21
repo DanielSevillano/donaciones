@@ -41,11 +41,31 @@ fun Navegacion(
         exitTransition = { materialFadeThroughOut() }
     ) {
         composable(route = Destino.Inicio.ruta) {
-            Inicio(colectas = viewModel.colectas)
+            Inicio(
+                colectas = viewModel.colectas,
+                cargando = viewModel.cargando,
+                error = viewModel.error,
+                recargar = {
+                    viewModel.obtenerColectas(
+                        provincia = provincia,
+                        dao = colectaDao
+                    )
+                }
+            )
         }
 
         composable(route = Destino.Colectas.ruta) {
-            Colectas(colectas = viewModel.colectas)
+            Colectas(
+                colectas = viewModel.colectas,
+                cargando = viewModel.cargando,
+                error = viewModel.error,
+                recargar = {
+                    viewModel.obtenerColectas(
+                        provincia = provincia,
+                        dao = colectaDao
+                    )
+                }
+            )
         }
 
         composable(route = Destino.Perfil.ruta) {
