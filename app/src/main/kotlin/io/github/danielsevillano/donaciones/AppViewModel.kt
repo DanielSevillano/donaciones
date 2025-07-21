@@ -31,10 +31,12 @@ class AppViewModel() : ViewModel() {
         cargando = true
         error = false
 
-        colectas = try {
-            dao.obtenerColectas(provincia = provincia).first()
-        } catch (_: Exception) {
-            emptyList()
+        if (colectas.isNullOrEmpty()) {
+            colectas = try {
+                dao.obtenerColectas(provincia = provincia).first()
+            } catch (_: Exception) {
+                emptyList()
+            }
         }
 
         val respuesta = try {
