@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "228de6b5b9d8a1a521da93a2d39d8a8e",
+    "identityHash": "d28ff30e7dc6a7fcae1714ade3f6cb5e",
     "entities": [
       {
         "tableName": "Colecta",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`provincia` TEXT NOT NULL, `lugar` TEXT NOT NULL, `municipio` TEXT NOT NULL, `fecha` INTEGER NOT NULL, `hora` TEXT NOT NULL, PRIMARY KEY(`fecha`, `lugar`, `hora`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`provincia` TEXT NOT NULL, `lugar` TEXT NOT NULL, `municipio` TEXT NOT NULL, `fecha` INTEGER NOT NULL, `hora` TEXT NOT NULL, PRIMARY KEY(`fecha`, `municipio`, `lugar`, `hora`))",
         "fields": [
           {
             "fieldPath": "provincia",
@@ -43,6 +43,7 @@
           "autoGenerate": false,
           "columnNames": [
             "fecha",
+            "municipio",
             "lugar",
             "hora"
           ]
@@ -51,7 +52,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '228de6b5b9d8a1a521da93a2d39d8a8e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd28ff30e7dc6a7fcae1714ade3f6cb5e')"
     ]
   }
 }

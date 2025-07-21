@@ -11,7 +11,7 @@ import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @Entity(
-    primaryKeys = ["fecha", "lugar", "hora"]
+    primaryKeys = ["fecha", "municipio", "lugar", "hora"]
 )
 data class Colecta(
     val provincia: Provincia,

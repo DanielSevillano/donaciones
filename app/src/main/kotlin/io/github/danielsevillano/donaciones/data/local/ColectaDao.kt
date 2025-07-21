@@ -15,6 +15,6 @@ interface ColectaDao {
     @Query("DELETE FROM colecta WHERE fecha < :fecha")
     suspend fun eliminarColectasPasadas(fecha: LocalDate)
 
-    @Query("SELECT * FROM colecta WHERE provincia == :provincia")
+    @Query("SELECT * FROM colecta WHERE provincia == :provincia ORDER BY fecha ASC")
     fun obtenerColectas(provincia: Provincia): Flow<List<Colecta>>
 }
