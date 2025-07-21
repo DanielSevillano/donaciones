@@ -69,7 +69,7 @@ fun Inicio(
 
                 itemsIndexed(
                     items = colectasHoy,
-                    key = { indice, grupo -> grupo.first().lugar }
+                    key = { indice, grupo -> "${grupo.first().lugar} (${grupo.first().municipio})" }
                 ) { indice, grupo ->
                     ElementoColecta(
                         colecta = grupo.first(),
