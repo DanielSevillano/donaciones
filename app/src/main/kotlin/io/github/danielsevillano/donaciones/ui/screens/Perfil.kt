@@ -1,11 +1,14 @@
 package io.github.danielsevillano.donaciones.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
@@ -14,7 +17,10 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -26,6 +32,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -152,35 +159,57 @@ fun Perfil(
                 )
             }
 
-            item(
-                key = "encabezadoDonaciones",
-                span = { GridItemSpan(currentLineSpan = maxLineSpan) }
-            ) {
-                Subencabezado(
-                    modifier = Modifier.padding(top = 8.dp),
-                    titulo = "Mis donaciones",
-                    boton = BotonIcono(
-                        accion = { nuevaDonacion = true },
-                        icono = Icons.Outlined.Add,
-                        descripcion = "Añadir donación"
+            if (donaciones.isNotEmpty()) {
+                item(
+                    key = "encabezadoDonaciones",
+                    span = { GridItemSpan(currentLineSpan = maxLineSpan) }
+                ) {
+                    Subencabezado(
+                        modifier = Modifier.padding(top = 8.dp),
+                        titulo = "Mis donaciones",
+                        boton = BotonIcono(
+                            accion = { nuevaDonacion = true },
+                            icono = Icons.Outlined.Add,
+                            descripcion = "Añadir donación"
+                        )
                     )
-                )
-            }
+                }
 
-            itemsIndexed(
-                items = donaciones,
-                key = { indice, donacion -> Conversores().fechaAMilisegundos(date = donacion.fecha) },
-                span = { indice, donacion -> GridItemSpan(currentLineSpan = maxLineSpan) }
-            ) { indice, donacion ->
-                ElementoListaDonaciones(
-                    modifier = Modifier.animateItem(),
-                    donacion = donacion,
-                    indice = indice,
-                    total = donaciones.size,
-                    eliminarDonacion = {
-                        scope.launch { eliminarDonacion(donacion) }
+                itemsIndexed(
+                    items = donaciones,
+                    key = { indice, donacion -> Conversores().fechaAMilisegundos(date = donacion.fecha) },
+                    span = { indice, donacion -> GridItemSpan(currentLineSpan = maxLineSpan) }
+                ) { indice, donacion ->
+                    ElementoListaDonaciones(
+                        modifier = Modifier.animateItem(),
+                        donacion = donacion,
+                        indice = indice,
+                        total = donaciones.size,
+                        eliminarDonacion = {
+                            scope.launch { eliminarDonacion(donacion) }
+                        }
+                    )
+                }
+            } else {
+                item(
+                    key = "nuevaDonacion",
+                    span = { GridItemSpan(currentLineSpan = maxLineSpan) }
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Button(
+                            onClick = { nuevaDonacion = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Add,
+                                contentDescription = "Nueva donación"
+                            )
+
+                            Spacer(modifier = Modifier.width(width = ButtonDefaults.IconSpacing))
+
+                            Text(text = "Nueva donación")
+                        }
                     }
-                )
+                }
             }
         }
 
