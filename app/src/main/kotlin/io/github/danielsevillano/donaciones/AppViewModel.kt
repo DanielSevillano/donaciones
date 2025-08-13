@@ -34,13 +34,17 @@ class AppViewModel() : ViewModel() {
         if (colectas.isNullOrEmpty()) {
             colectas = try {
                 dao.obtenerColectas(provincia = provincia).first()
+                    .filter { it.diasRestantes >= 0 }
+                    .sortedBy { "${it.fecha} - ${it.municipio}, ${it.lugar} (${it.hora})" }
             } catch (_: Exception) {
                 emptyList()
             }
         }
 
         val respuesta = try {
-            Scrape().obtenerColectas(provincia).filter { it.diasRestantes >= 0 }
+            Scrape().obtenerColectas(provincia)
+                .filter { it.diasRestantes >= 0 }
+                .sortedBy { "${it.fecha} - ${it.municipio}, ${it.lugar} (${it.hora})" }
         } catch (_: Exception) {
             emptyList()
         }
@@ -50,9 +54,7 @@ class AppViewModel() : ViewModel() {
         if (respuesta.isNotEmpty()) {
             colectas = respuesta
             dao.guardarColectas(colectas = respuesta)
-        } else if (colectas.isNullOrEmpty()) {
-            error = true
-        }
+        } else if (colectas.isNullOrEmpty()) error = true
 
         dao.eliminarColectasPasadas(fecha = Clock.System.todayIn(TimeZone.Companion.currentSystemDefault()))
     }
