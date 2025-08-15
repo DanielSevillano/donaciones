@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import io.github.danielsevillano.donaciones.data.local.Colecta
 import io.github.danielsevillano.donaciones.ui.models.Posicion
 import kotlinx.datetime.TimeZone
@@ -61,7 +60,7 @@ fun ElementoColecta(
                                         CalendarContract.Events.EVENT_LOCATION,
                                         "${colecta.lugar}, ${colecta.municipio}"
                                     )
-                                startActivity(contexto, intent, null)
+                                contexto.startActivity(intent)
                             },
                             label = { Text(text = hora) },
                             colors = AssistChipDefaults.assistChipColors(
