@@ -126,7 +126,10 @@ fun Inicio(
                         item(key = "donacionesSemana") {
                             Subencabezado(
                                 titulo = "Donaciones esta semana",
-                                modifier = Modifier.padding(top = 22.dp, bottom = 10.dp)
+                                modifier = Modifier.padding(
+                                    top = if (colectasHoy.isNotEmpty()) 22.dp else 0.dp,
+                                    bottom = 10.dp
+                                )
                             )
                         }
 
