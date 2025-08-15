@@ -76,7 +76,6 @@ fun DialogoEdicionPerfil(
                     label = {
                         Text(text = "Nombre")
                     },
-                    isError = nombre.isEmpty(),
                     singleLine = true
                 )
 
