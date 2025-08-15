@@ -42,7 +42,7 @@ class AppViewModel() : ViewModel() {
         }
 
         val respuesta = try {
-            Scrape().obtenerColectas(provincia)
+            Scrape.obtenerColectas(provincia)
                 .filter { it.diasRestantes >= 0 }
                 .sortedBy { "${it.fecha} - ${it.municipio}, ${it.lugar} (${it.hora})" }
         } catch (_: Exception) {

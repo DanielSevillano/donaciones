@@ -70,7 +70,10 @@ fun GrupoColectasDiarias(
             colectasPorLugar.forEachIndexed { indice, grupo ->
                 ElementoColecta(
                     colecta = grupo.first(),
-                    horas = grupo.map { it.hora }.sorted(),
+                    horas = grupo
+                        .map { it.hora }
+                        .filter { it.isNotBlank() }
+                        .sorted(),
                     indice = indice,
                     total = colectasPorLugar.size
                 )

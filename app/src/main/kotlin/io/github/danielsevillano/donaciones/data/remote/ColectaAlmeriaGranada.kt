@@ -41,10 +41,11 @@ class ColectaAlmeriaGranada(
         }
     }
 
-    private fun obtenerHora(): String? {
+    private fun obtenerHora(): String {
         val textoHora = separarDatos(texto = datos)?.second ?: ""
         val textoFormateado = textoHora
             .uppercase()
+            .replace(oldValue = ".", newValue = ",")
             .replace(oldValue = "'", newValue = ",")
             .replace(oldValue = "-", newValue = " A ")
 
@@ -61,16 +62,18 @@ class ColectaAlmeriaGranada(
                 .replace(oldValue = ",", newValue = ":")
         }
 
-        return null
+        return ""
     }
 
-    val lugar = separarDatos(texto = datos)?.first ?: ""
+    val lugar = separarDatos(texto = datos)?.first
 
     val colecta = Colecta(
         provincia = provincia,
-        lugar = Formato.formatear(texto = lugar),
+        lugar = if (lugar.isNullOrBlank()) {
+            Formato.formatear(texto = municipio)
+        } else Formato.formatear(texto = lugar),
         municipio = Formato.formatear(texto = municipio),
         fecha = obtenerFecha(fecha = fecha),
-        hora = obtenerHora() ?: ""
+        hora = obtenerHora()
     )
 }

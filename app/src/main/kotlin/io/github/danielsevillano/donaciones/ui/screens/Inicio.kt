@@ -112,7 +112,10 @@ fun Inicio(
                         ) { indice, grupo ->
                             ElementoColecta(
                                 colecta = grupo.first(),
-                                horas = grupo.map { it.hora }.sorted(),
+                                horas = grupo
+                                    .map { it.hora }
+                                    .filter { it.isNotBlank() }
+                                    .sorted(),
                                 indice = indice,
                                 total = colectasHoy.size
                             )

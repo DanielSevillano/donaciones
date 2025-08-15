@@ -72,10 +72,11 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.datastore.preferences)
     implementation(libs.datetime)
+    implementation(libs.ksoup)
+    implementation(libs.ksoup.network)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material.motion.compose)
     implementation(libs.navigation.compose)
     implementation(libs.room)
-    implementation(libs.skrapeit)
     ksp(libs.room.compiler)
 }
