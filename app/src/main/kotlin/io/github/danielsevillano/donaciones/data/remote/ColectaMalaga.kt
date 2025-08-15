@@ -47,8 +47,8 @@ data class ColectaMalaga(
 
     val colecta = Colecta(
         provincia = Provincia.Malaga,
-        lugar = Formato().formatear(texto = lugar),
-        municipio = Formato().formatear(texto = municipio),
+        lugar = Formato.formatear(texto = lugar),
+        municipio = Formato.formatear(texto = municipio),
         fecha = obtenerFecha(fecha),
         hora = hora
     )

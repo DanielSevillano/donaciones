@@ -68,8 +68,8 @@ class ColectaAlmeriaGranada(
 
     val colecta = Colecta(
         provincia = provincia,
-        lugar = Formato().formatear(texto = lugar),
-        municipio = Formato().formatear(texto = municipio),
+        lugar = Formato.formatear(texto = lugar),
+        municipio = Formato.formatear(texto = municipio),
         fecha = obtenerFecha(fecha = fecha),
         hora = obtenerHora() ?: ""
     )

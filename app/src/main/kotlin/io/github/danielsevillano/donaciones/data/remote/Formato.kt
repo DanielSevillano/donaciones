@@ -1,6 +1,6 @@
 package io.github.danielsevillano.donaciones.data.remote
 
-class Formato {
+object Formato {
     private val diccionario = mapOf(
         "Aguila" to "Águila",
         "Albeniz" to "Albéniz",
@@ -19,6 +19,7 @@ class Formato {
         "Mediterraneo" to "Mediterráneo",
         "Movil" to "Móvil",
         "Ojen" to "Ojén",
+        "Rincon" to "Rincón",
         "Salon" to "Salón",
         "Sanguinea" to "Sanguínea",
         "Transfusion" to "Transfusión",
