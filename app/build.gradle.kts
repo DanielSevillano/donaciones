@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -61,6 +62,10 @@ dependencies {
     implementation(libs.datetime)
     implementation(libs.ksoup)
     implementation(libs.ksoup.network)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.serialization)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material.motion.compose)
     implementation(libs.navigation.compose)

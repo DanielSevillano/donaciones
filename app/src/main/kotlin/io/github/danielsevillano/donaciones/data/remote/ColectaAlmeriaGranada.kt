@@ -2,13 +2,6 @@ package io.github.danielsevillano.donaciones.data.remote
 
 import io.github.danielsevillano.donaciones.data.local.Colecta
 import io.github.danielsevillano.donaciones.domain.Provincia
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format.char
-import kotlinx.datetime.todayIn
-import java.time.format.DateTimeParseException
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 class ColectaAlmeriaGranada(
     val provincia: Provincia,
@@ -25,20 +18,6 @@ class ColectaAlmeriaGranada(
             val hora = matchResult.groupValues[2].trim()
             Pair(first = lugar, second = hora)
         } else null
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private fun obtenerFecha(fecha: String): LocalDate {
-        return try {
-            LocalDate.parse(
-                input = fecha,
-                format = LocalDate.Format {
-                    day(); char(value = '/'); monthNumber(); char(value = '/'); year()
-                }
-            )
-        } catch (_: DateTimeParseException) {
-            Clock.System.todayIn(TimeZone.currentSystemDefault())
-        }
     }
 
     private fun obtenerHora(): String {
@@ -73,7 +52,7 @@ class ColectaAlmeriaGranada(
             Formato.formatear(texto = municipio)
         } else Formato.formatear(texto = lugar),
         municipio = Formato.formatear(texto = municipio),
-        fecha = obtenerFecha(fecha = fecha),
+        fecha = Utilidades.obtenerFecha(fecha = fecha),
         hora = obtenerHora()
     )
 }

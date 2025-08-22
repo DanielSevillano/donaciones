@@ -8,6 +8,10 @@ enum class Provincia(
         nombre = "Almería",
         url = "http://transfusion.granada-almeria.org/donar/proximas-colectas-en-almeria"
     ),
+    Cordoba(
+        nombre = "Córdoba",
+        url = "http://www.donantescordoba.org/online/crtsCordoba-colectas.json"
+    ),
     Granada(
         nombre = "Granada",
         url = "http://transfusion.granada-almeria.org/donar/proximas-colectas-en-granada"

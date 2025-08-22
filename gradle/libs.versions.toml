@@ -8,6 +8,7 @@ datetime = "0.7.1"
 kotlin = "2.2.10"
 kotlin-ksp = "2.2.10-2.0.2"
 ksoup = "0.2.5"
+ktor = "3.2.3"
 lifecycle = "2.9.2"
 material-motion = "2.0.1"
 navigation = "2.9.3"
@@ -24,6 +25,10 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 ksoup = { group = "com.fleeksoft.ksoup", name = "ksoup", version.ref = "ksoup" }
 ksoup-network = { group = "com.fleeksoft.ksoup", name = "ksoup-network", version.ref = "ksoup" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 material-motion-compose = { group = "io.github.fornewid", name = "material-motion-compose-core", version.ref = "material-motion" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
@@ -35,3 +40,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
