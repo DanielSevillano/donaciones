@@ -8,11 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import io.github.danielsevillano.donaciones.AppViewModel
-import io.github.danielsevillano.donaciones.Destino
 import io.github.danielsevillano.donaciones.data.local.ColectaDao
 import io.github.danielsevillano.donaciones.data.local.DonacionDao
 import io.github.danielsevillano.donaciones.dataStore
 import io.github.danielsevillano.donaciones.domain.Provincia
+import io.github.danielsevillano.donaciones.ui.navigation.Rutas
 import soup.compose.material.motion.animation.materialFadeThroughIn
 import soup.compose.material.motion.animation.materialFadeThroughOut
 
@@ -38,11 +38,11 @@ fun Navegacion(
 
     NavHost(
         navController = navController,
-        startDestination = Destino.entries.first().ruta,
+        startDestination = Rutas.Inicio,
         enterTransition = { materialFadeThroughIn() },
         exitTransition = { materialFadeThroughOut() }
     ) {
-        composable(route = Destino.Inicio.ruta) {
+        composable<Rutas.Inicio> {
             Inicio(
                 colectas = viewModel.colectas,
                 cargando = viewModel.cargando,
@@ -57,7 +57,7 @@ fun Navegacion(
             )
         }
 
-        composable(route = Destino.Colectas.ruta) {
+        composable<Rutas.Colectas> {
             Colectas(
                 colectas = viewModel.colectas,
                 cargando = viewModel.cargando,
@@ -72,7 +72,7 @@ fun Navegacion(
             )
         }
 
-        composable(route = Destino.Perfil.ruta) {
+        composable<Rutas.Perfil> {
             Perfil(
                 obtenerDato = { key ->
                     viewModel.obtenerDato(

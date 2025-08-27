@@ -6,26 +6,27 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import io.github.danielsevillano.donaciones.Destino
+import io.github.danielsevillano.donaciones.ui.navigation.DestinosNavegacion
 
 @Composable
 fun BarraNavegacion(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val destinoActual = navBackStackEntry?.destination
+    val currentDestination = navBackStackEntry?.destination
 
     NavigationBar {
-        Destino.entries.forEach { destino ->
-            val destinoSeleccionado =
-                destinoActual?.hierarchy?.any { it.route == destino.ruta } == true
+        DestinosNavegacion.lista.forEach { destino ->
+            val seleccionado =
+                currentDestination?.hierarchy?.any { it.hasRoute(route = destino.ruta::class) } == true
 
             NavigationBarItem(
-                selected = destinoSeleccionado,
+                selected = seleccionado,
                 onClick = {
-                    if (!destinoSeleccionado) {
+                    if (!seleccionado) {
                         navController.navigate(route = destino.ruta) {
                             popUpTo(id = navController.graph.findStartDestination().id) {
                                 saveState = true
@@ -37,7 +38,7 @@ fun BarraNavegacion(navController: NavHostController) {
                 },
                 icon = {
                     Icon(
-                        imageVector = if (destinoSeleccionado) destino.iconoSeleccionado else destino.icono,
+                        imageVector = if (seleccionado) destino.iconoSeleccionado else destino.icono,
                         contentDescription = destino.nombre
                     )
                 },
