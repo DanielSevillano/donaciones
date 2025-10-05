@@ -1,23 +1,23 @@
 [versions]
-activity = "1.10.1"
-agp = "8.12.1"
-compose-bom = "2025.08.00"
+activity = "1.11.0"
+agp = "8.13.0"
+compose-bom = "2025.09.01"
 core-splashscreen = "1.0.1"
 datastore = "1.1.7"
 datetime = "0.7.1"
-kotlin = "2.2.10"
-kotlin-ksp = "2.2.10-2.0.2"
+kotlin = "2.2.20"
+kotlin-ksp = "2.2.20-2.0.3"
 ksoup = "0.2.5"
-ktor = "3.2.3"
-lifecycle = "2.9.2"
+ktor = "3.3.0"
+lifecycle = "2.9.4"
 material-motion = "2.0.1"
-navigation = "2.9.3"
-room = "2.7.2"
+navigation = "2.9.5"
+room = "2.8.1"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.5.0-alpha02" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.5.0-alpha04" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
