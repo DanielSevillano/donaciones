@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -69,7 +70,7 @@ fun Perfil(
     var grupoSanguineo: GrupoSanguineo by rememberSaveable { mutableStateOf(value = GrupoSanguineo.Desconocido) }
     var modoEdicion by rememberSaveable { mutableStateOf(value = false) }
     var nuevaDonacion by rememberSaveable { mutableStateOf(value = false) }
-    var donaciones: List<Donacion> by rememberSaveable { mutableStateOf(value = emptyList()) }
+    var donaciones: List<Donacion> by remember { mutableStateOf(value = emptyList()) }
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
