@@ -28,6 +28,7 @@ import io.github.danielsevillano.donaciones.ui.components.GrupoColectasDiarias
 import io.github.danielsevillano.donaciones.ui.components.MensajeError
 import io.github.danielsevillano.donaciones.ui.components.Subencabezado
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
@@ -45,15 +46,16 @@ fun Inicio(
     recargar: suspend () -> Unit,
     scaffoldPadding: PaddingValues
 ) {
+    val fechaHoy = Clock.System.todayIn(timeZone = TimeZone.currentSystemDefault())
+
     val colectasAgrupadas =
         colectas?.groupBy { it.municipio + it.lugar + it.fecha.dayOfYear }?.values?.toList()
             ?: emptyList()
     val colectasHoy = colectasAgrupadas.filter { it.first().diasRestantes == 0 }
 
     val colectasSemana = colectas?.filter {
-        (it.diasRestantes <= 7) && (it.fecha.dayOfWeek > Clock.System.todayIn(
-            TimeZone.currentSystemDefault()
-        ).dayOfWeek)
+        if (fechaHoy.dayOfWeek == DayOfWeek.SUNDAY) it.diasRestantes <= 7
+        else (it.diasRestantes <= 7) && (it.fecha.dayOfWeek > fechaHoy.dayOfWeek)
     }?.groupBy { it.fecha.dayOfYear }?.values?.toList() ?: emptyList()
 
     val scope = rememberCoroutineScope()
@@ -108,7 +110,7 @@ fun Inicio(
 
                         itemsIndexed(
                             items = colectasHoy,
-                            key = { indice, grupo -> "${grupo.first().lugar} (${grupo.first().municipio})" }
+                            key = { _, grupo -> "${grupo.first().lugar} (${grupo.first().municipio})" }
                         ) { indice, grupo ->
                             ElementoColecta(
                                 colecta = grupo.first(),
@@ -135,7 +137,7 @@ fun Inicio(
 
                         itemsIndexed(
                             items = colectasSemana,
-                            key = { indice, colectasDiarias -> colectasDiarias.first().fecha }
+                            key = { _, colectasDiarias -> colectasDiarias.first().fecha }
                         ) { indice, colectasDiarias ->
                             GrupoColectasDiarias(
                                 modifier = Modifier.padding(
