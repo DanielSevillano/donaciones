@@ -11,7 +11,7 @@ ksoup = "0.2.5"
 ktor = "3.3.3"
 lifecycle = "2.9.6"
 material-motion = "2.0.1"
-navigation = "2.9.6"
+navigation3 = "1.0.0"
 room = "2.8.4"
 
 [libraries]
@@ -31,7 +31,8 @@ ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref =
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 material-motion-compose = { group = "io.github.fornewid", name = "material-motion-compose-core", version.ref = "material-motion" }
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 

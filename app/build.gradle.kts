@@ -68,7 +68,8 @@ dependencies {
     implementation(libs.ktor.serialization)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material.motion.compose)
-    implementation(libs.navigation.compose)
+    implementation(libs.navigation3.runtime)
+    implementation(libs.navigation3.ui)
     implementation(libs.room)
     ksp(libs.room.compiler)
 }

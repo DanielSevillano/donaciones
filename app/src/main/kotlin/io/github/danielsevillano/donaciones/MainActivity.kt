@@ -15,13 +15,14 @@ import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.room.Room
 import io.github.danielsevillano.donaciones.data.local.ColectaDatabase
 import io.github.danielsevillano.donaciones.data.local.Conversores
 import io.github.danielsevillano.donaciones.data.local.DonacionDatabase
 import io.github.danielsevillano.donaciones.domain.Provincia
 import io.github.danielsevillano.donaciones.ui.components.BarraNavegacion
+import io.github.danielsevillano.donaciones.ui.navigation.Rutas
 import io.github.danielsevillano.donaciones.ui.screens.Navegacion
 import io.github.danielsevillano.donaciones.ui.theme.AppTheme
 
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
                 val colectaDao = colectas.dao()
                 val donacionDao = donaciones.dao()
 
-                val navController = rememberNavController()
+                val backStack = rememberNavBackStack(Rutas.Inicio)
                 val viewModel = viewModel<AppViewModel>()
 
                 LaunchedEffect(key1 = Unit) {
@@ -69,11 +70,11 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     bottomBar = {
-                        BarraNavegacion(navController = navController)
+                        BarraNavegacion(backStack = backStack)
                     }
                 ) { paddingValues ->
                     Navegacion(
-                        navController = navController,
+                        backStack = backStack,
                         viewModel = viewModel,
                         colectaDao = colectaDao,
                         donacionDao = donacionDao,
