@@ -3,13 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     compilerOptions {
+        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3
         jvmTarget = JvmTarget.fromTarget(target = "17")
     }
 }
@@ -21,7 +21,6 @@ android {
     defaultConfig {
         applicationId = "io.github.danielsevillano.donaciones"
         minSdk = 26
-        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
     }
