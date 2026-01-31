@@ -23,5 +23,5 @@ data class Colecta(
     @OptIn(ExperimentalTime::class)
     @Ignore
     val diasRestantes =
-        Clock.System.todayIn(TimeZone.Companion.currentSystemDefault()).daysUntil(other = fecha)
+        Clock.System.todayIn(TimeZone.currentSystemDefault()).daysUntil(other = fecha)
 }

@@ -48,7 +48,7 @@ object Formato {
 
     private fun String.formatearTildes(): String {
         var textoFormateado = this
-        diccionario.forEach { old, new ->
+        diccionario.forEach { (old, new) ->
             textoFormateado = textoFormateado.replace(oldValue = old, newValue = new)
         }
 

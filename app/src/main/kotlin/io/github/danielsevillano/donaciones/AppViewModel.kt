@@ -56,7 +56,7 @@ class AppViewModel() : ViewModel() {
             dao.guardarColectas(colectas = respuesta)
         } else if (colectas.isNullOrEmpty()) error = true
 
-        dao.eliminarColectasPasadas(fecha = Clock.System.todayIn(TimeZone.Companion.currentSystemDefault()))
+        dao.eliminarColectasPasadas(fecha = Clock.System.todayIn(TimeZone.currentSystemDefault()))
     }
 
     suspend fun obtenerDato(
