@@ -10,7 +10,7 @@ class ColectaAlmeriaGranada(
     val datos: String = ""
 ) {
     private fun separarDatos(texto: String): Pair<String, String>? {
-        val regex = Regex(pattern = """^LUGAR: (.*) HORARIO: (.*)$""")
+        val regex = Regex(pattern = """^(?:LUGAR: (.*))?HORARIO: (.*)$""")
         val matchResult = regex.find(input = texto)
 
         return if (matchResult != null) {

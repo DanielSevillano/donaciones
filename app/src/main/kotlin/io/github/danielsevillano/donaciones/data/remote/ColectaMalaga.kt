@@ -9,7 +9,7 @@ data class ColectaMalaga(
     var datos: String = ""
 ) {
     private fun separarDatos(texto: String): Pair<String, String>? {
-        val regex = Regex(pattern = """^(.*?) DE (\d+(,\d+)? A \d+(,\d+)?) H""")
+        val regex = Regex(pattern = """^(.*?) DE (\d+(?:[,:]\d+)? A \d+(?:[,:]\d+)?) H""")
         val matchResult = regex.find(input = texto)
 
         return if (matchResult != null) {
