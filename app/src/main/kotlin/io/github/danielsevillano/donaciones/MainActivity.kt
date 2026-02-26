@@ -52,6 +52,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 var provinciaSeleccionada: Provincia by rememberSaveable { mutableStateOf(value = Provincia.Malaga) }
+                var municipioSeleccionado: String? by rememberSaveable(provinciaSeleccionada) {
+                    mutableStateOf(value = null)
+                }
+
                 val colectaDao = colectas.dao()
                 val donacionDao = donaciones.dao()
 
@@ -83,6 +87,8 @@ class MainActivity : ComponentActivity() {
                             provinciaSeleccionada = provincia
                             viewModel.colectas = null
                         },
+                        municipio = municipioSeleccionado,
+                        modificarMunicipio = { municipio -> municipioSeleccionado = municipio },
                         scaffoldPadding = paddingValues
                     )
                 }

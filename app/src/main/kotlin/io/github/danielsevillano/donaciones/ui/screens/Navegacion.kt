@@ -26,6 +26,8 @@ fun Navegacion(
     donacionDao: DonacionDao,
     provincia: Provincia,
     modificarProvincia: (Provincia) -> Unit,
+    municipio: String?,
+    modificarMunicipio: (String?) -> Unit,
     scaffoldPadding: PaddingValues
 ) {
     val context = LocalContext.current
@@ -54,6 +56,11 @@ fun Navegacion(
             entry<Rutas.Inicio> {
                 Inicio(
                     colectas = viewModel.colectas,
+                    abrirColectas = {
+                        backStack.add(Rutas.Colectas)
+                        if (backStack.size == 3) backStack.removeAt(index = 1)
+                    },
+                    modificarMunicipio = modificarMunicipio,
                     cargando = viewModel.cargando,
                     error = viewModel.error,
                     recargar = {
@@ -69,6 +76,8 @@ fun Navegacion(
             entry<Rutas.Colectas> {
                 Colectas(
                     colectas = viewModel.colectas,
+                    municipioSeleccionado = municipio,
+                    modificarMunicipio = modificarMunicipio,
                     cargando = viewModel.cargando,
                     error = viewModel.error,
                     recargar = {

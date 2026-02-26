@@ -39,13 +39,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun Colectas(
     colectas: List<Colecta>?,
+    municipioSeleccionado: String?,
+    modificarMunicipio: (String?) -> Unit,
     cargando: Boolean,
     error: Boolean,
     recargar: suspend () -> Unit,
     scaffoldPadding: PaddingValues
 ) {
     val municipios = colectas?.map { it.municipio }?.distinct() ?: emptyList()
-    var municipioSeleccionado: String? by rememberSaveable { mutableStateOf(value = null) }
 
     val colectasFiltradas =
         if (municipioSeleccionado == null) colectas
@@ -130,7 +131,7 @@ fun Colectas(
             FiltrosColectas(
                 municipios = municipios.sorted(),
                 municipioSeleccionado = municipioSeleccionado,
-                seleccionarMunicipo = { municipio -> municipioSeleccionado = municipio },
+                seleccionarMunicipo = modificarMunicipio,
                 cerrarFiltros = { mostrarFiltros = false }
             )
         }

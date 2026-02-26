@@ -9,7 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,39 +27,32 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import io.github.danielsevillano.donaciones.data.local.Colecta
 import io.github.danielsevillano.donaciones.ui.components.ElementoColecta
-import io.github.danielsevillano.donaciones.ui.components.GrupoColectasDiarias
 import io.github.danielsevillano.donaciones.ui.components.MensajeError
 import io.github.danielsevillano.donaciones.ui.components.Subencabezado
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(
-    ExperimentalTime::class, ExperimentalMaterial3Api::class,
+    ExperimentalTime::class,
+    ExperimentalMaterial3Api::class,
     ExperimentalMaterial3ExpressiveApi::class
 )
 @Composable
 fun Inicio(
     colectas: List<Colecta>?,
+    abrirColectas: () -> Unit,
+    modificarMunicipio: (String?) -> Unit,
     cargando: Boolean,
     error: Boolean,
     recargar: suspend () -> Unit,
     scaffoldPadding: PaddingValues
 ) {
-    val fechaHoy = Clock.System.todayIn(timeZone = TimeZone.currentSystemDefault())
-
     val colectasAgrupadas =
         colectas?.groupBy { it.municipio + it.lugar + it.fecha.dayOfYear }?.values?.toList()
             ?: emptyList()
     val colectasHoy = colectasAgrupadas.filter { it.first().diasRestantes == 0 }
 
-    val colectasSemana = colectas?.filter {
-        if (fechaHoy.dayOfWeek == DayOfWeek.SUNDAY) it.diasRestantes <= 7
-        else (it.diasRestantes <= 7) && (it.fecha.dayOfWeek > fechaHoy.dayOfWeek)
-    }?.groupBy { it.fecha.dayOfYear }?.values?.toList() ?: emptyList()
+    val municipios = colectas?.map { it.municipio }?.distinct()?.sorted() ?: emptyList()
 
     val scope = rememberCoroutineScope()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -101,7 +97,7 @@ fun Inicio(
             ) {
                 if (!colectas.isNullOrEmpty()) {
                     if (colectasHoy.isNotEmpty()) {
-                        item(key = "donacionesHoy") {
+                        item(key = "tituloDonacionesHoy") {
                             Subencabezado(
                                 titulo = "Donaciones hoy",
                                 modifier = Modifier.padding(bottom = 10.dp)
@@ -124,10 +120,10 @@ fun Inicio(
                         }
                     }
 
-                    if (colectasSemana.isNotEmpty()) {
-                        item(key = "donacionesSemana") {
+                    if (municipios.isNotEmpty()) {
+                        item(key = "tituloMunicipiosProgramados") {
                             Subencabezado(
-                                titulo = "Donaciones esta semana",
+                                titulo = "Municipios con colectas programadas",
                                 modifier = Modifier.padding(
                                     top = if (colectasHoy.isNotEmpty()) 22.dp else 0.dp,
                                     bottom = 10.dp
@@ -136,15 +132,25 @@ fun Inicio(
                         }
 
                         itemsIndexed(
-                            items = colectasSemana,
-                            key = { _, colectasDiarias -> colectasDiarias.first().fecha }
-                        ) { indice, colectasDiarias ->
-                            GrupoColectasDiarias(
-                                modifier = Modifier.padding(
-                                    bottom = if (indice == colectasSemana.size - 1) 0.dp else 16.dp
+                            items = municipios,
+                            key = { _, municipio -> municipio }
+                        ) { indice, municipio ->
+                            SegmentedListItem(
+                                onClick = {
+                                    modificarMunicipio(municipio)
+                                    abrirColectas()
+                                },
+                                shapes = ListItemDefaults.segmentedShapes(
+                                    index = indice,
+                                    count = municipios.size
                                 ),
-                                colectasDiarias = colectasDiarias
-                            )
+                                colors = ListItemDefaults.segmentedColors(
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                )
+                            ) {
+                                Text(text = municipio)
+                            }
                         }
                     }
                 } else if (error) {
