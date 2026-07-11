@@ -142,11 +142,13 @@ fun Inicio(
                                 },
                                 shapes = ListItemDefaults.segmentedShapes(
                                     index = indice,
-                                    count = municipios.size
+                                    count = municipios.size,
+                                    defaultShapes = if (municipios.size == 1) ListItemDefaults.shapes(
+                                        shape = MaterialTheme.shapes.large
+                                    ) else ListItemDefaults.shapes()
                                 ),
                                 colors = ListItemDefaults.segmentedColors(
-                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
                                 )
                             ) {
                                 Text(text = municipio)

@@ -7,14 +7,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import io.github.danielsevillano.donaciones.data.local.Colecta
-import io.github.danielsevillano.donaciones.ui.models.Posicion
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
 import kotlinx.datetime.toInstant
@@ -30,10 +31,14 @@ fun ElementoColecta(
 ) {
     val contexto = LocalContext.current
 
-    ListItemExpressive(
-        headlineContent = {
-            Text(text = colecta.lugar)
-        },
+    SegmentedListItem(
+        shapes = ListItemDefaults.segmentedShapes(
+            index = indice,
+            count = total,
+            defaultShapes = if (total == 1) ListItemDefaults.shapes(
+                shape = MaterialTheme.shapes.large
+            ) else ListItemDefaults.shapes()
+        ),
         overlineContent = {
             Text(
                 text = colecta.municipio,
@@ -72,9 +77,10 @@ fun ElementoColecta(
                 }
             }
         },
-        position = if (total == 1) Posicion.Unica
-        else if (indice == 0) Posicion.Inicial
-        else if (indice == total - 1) Posicion.Final
-        else Posicion.Media
-    )
+        colors = ListItemDefaults.segmentedColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
+        )
+    ) {
+        Text(text = colecta.lugar)
+    }
 }
