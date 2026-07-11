@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -7,15 +5,9 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-kotlin {
-    compilerOptions {
-        languageVersion = KotlinVersion.KOTLIN_2_3
-    }
-}
-
 android {
     namespace = "io.github.danielsevillano.donaciones"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "io.github.danielsevillano.donaciones"
